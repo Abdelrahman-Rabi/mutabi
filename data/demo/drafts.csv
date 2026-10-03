@@ -1,0 +1,3 @@
+draft_id,invoice_id,text,status,approved_by,approved_at
+DRAFT-004,INV-004,Please arrange payment of SAR 2500 for INV-004.,awaiting_approval,,
+DRAFT-014,INV-014,Please arrange payment of SAR 2000 for INV-014.,approved,DEMO-EMPLOYEE,2026-10-03T10:00:00+03:00

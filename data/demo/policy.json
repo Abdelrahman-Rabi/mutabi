@@ -1,0 +1,19 @@
+{
+  "policy_id": "DEMO-POLICY-1",
+  "synthetic": true,
+  "business_validation_pending": true,
+  "timezone": "Asia/Riyadh",
+  "reference_time": "2026-10-03T10:00:00+03:00",
+  "currency": "SAR",
+  "followup_days_after_promise": 1,
+  "balance_freshness_hours": 24,
+  "require_explicit_promise_amount": true,
+  "require_relative_date_confirmation": true,
+  "require_employee_approval_to_send": true,
+  "recheck_balance_before_send": true,
+  "pause_collection_pending_payment_verification": true,
+  "pause_disputed_amount_collection": true,
+  "minimum_contact_interval_hours": 24,
+  "automatic_escalation_enabled": false,
+  "channel": "simulated"
+}

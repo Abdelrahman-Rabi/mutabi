@@ -1,0 +1,82 @@
+{
+  "schema_version": 1,
+  "status": "Approved scenarios; not executed",
+  "notes": "Expected outcomes are for the evaluator only. Never include this file in agent context. Each scenario starts from a fresh baseline unless its steps explicitly preserve state.",
+  "cases": [
+    {
+      "id": "TC-01", "invoice_ids": ["INV-001"], "message_id": "MSG-001",
+      "steps": ["process_message", "replay_same_message"],
+      "expected": {"intent": "payment_promise", "promise_amount": "3000.00", "promise_date": "2026-10-05", "followup_date": "2026-10-06", "balance": "3000.00", "new_promise_count": 1, "new_followup_count": 1, "sent_count": 0}
+    },
+    {
+      "id": "TC-02", "invoice_ids": ["INV-002"], "message_id": "MSG-002",
+      "steps": ["process_message", "replay_same_message"],
+      "expected": {"intent": "incomplete_payment_promise", "status": "awaiting_clarification", "clarify": ["amount", "payment_date"], "new_promise_count": 0, "retain_task": "TASK-002", "balance": "4500.00", "sent_count": 0}
+    },
+    {
+      "id": "TC-03", "invoice_ids": ["INV-003"], "message_id": "MSG-003", "accounting_event": "ACC-003",
+      "steps": ["process_message", "verify_balance"],
+      "expected": {"intent": "payment_claim", "status": "awaiting_payment_verification", "balance": "2000.00", "settled": false, "verification_task_created": true, "collection_reminders_paused": true, "sent_count": 0}
+    },
+    {
+      "id": "TC-04", "invoice_ids": ["INV-004"], "accounting_event": "ACC-004",
+      "steps": ["run_due_balance_check", "repeat_due_check"],
+      "expected": {"status": "settled", "balance": "0.00", "promise_status": "fulfilled", "open_collection_tasks": 0, "draft_id": "DRAFT-004", "draft_invalidated": true, "verification_source": "DEMO-LEDGER-004", "sent_count": 0}
+    },
+    {
+      "id": "TC-05", "invoice_ids": ["INV-005"], "accounting_event": "ACC-005",
+      "steps": ["run_due_balance_check", "repeat_due_check"],
+      "expected": {"balance": "3000.00", "settled": false, "promise_status": "partially_fulfilled", "new_promise_count": 0, "clarify": ["remaining_payment_date"], "requested_amount": "3000.00", "sent_count": 0}
+    },
+    {
+      "id": "TC-06", "invoice_ids": ["INV-006"], "accounting_event": "ACC-006",
+      "steps": ["run_due_balance_check", "repeat_due_check"],
+      "expected": {"promise_status": "missed", "balance": "3000.00", "new_followup_count": 1, "automatic_supply_suspension": false, "automatic_legal_referral": false, "legal_threat": false, "sent_count": 0}
+    },
+    {
+      "id": "TC-07", "invoice_ids": ["INV-007"], "message_id": "MSG-007",
+      "steps": ["process_message"],
+      "expected": {"intent": "invoice_dispute", "claimed_disputed_amount": "1000.00", "balance": "4000.00", "finance_review_task_created": true, "disputed_collection_paused": true, "new_promise_count": 0, "automatic_credit_created": false, "sent_count": 0}
+    },
+    {
+      "id": "TC-08", "invoice_ids": ["INV-008"], "message_id": "MSG-008",
+      "steps": ["process_message"],
+      "expected": {"status": "awaiting_clarification", "candidate_date": "2026-10-08", "candidate_amount": "1500.00", "new_promise_count": 0, "date_confirmation_required": true, "sent_count": 0}
+    },
+    {
+      "id": "TC-09", "invoice_ids": ["INV-009A", "INV-009B"], "message_id": "MSG-009",
+      "steps": ["process_message", "replay_same_message"],
+      "expected": {"status": "awaiting_clarification", "clarify": ["invoice_reference"], "new_promise_count": 0, "balances": {"INV-009A": "2000.00", "INV-009B": "3000.00"}, "sent_count": 0}
+    },
+    {
+      "id": "TC-10", "invoice_ids": ["INV-010"], "message_id": "MSG-010",
+      "steps": ["process_message"],
+      "expected": {"intent": "conditional_offer", "human_review_required": true, "requested_discount_percent": "20", "balance": "6000.00", "discount_accepted": false, "credit_terms_changed": false, "new_promise_count": 0, "sent_count": 0}
+    },
+    {
+      "id": "TC-11", "invoice_ids": ["INV-011"], "accounting_event": "ACC-011",
+      "steps": ["prepare_collection_message", "attempt_balance_refresh"],
+      "expected": {"cached_balance": "2000.00", "balance_verified": false, "status": "needs_data_review", "error_logged": "SOURCE_UNAVAILABLE", "collection_send_blocked": true, "sent_count": 0}
+    },
+    {
+      "id": "TC-12", "invoice_ids": ["INV-012"], "message_id": "MSG-012",
+      "steps": ["process_message"],
+      "expected": {"balance": "3500.00", "settled": false, "history_preserved": true, "customer_instruction_executed": false, "sent_count": 0}
+    },
+    {
+      "id": "TC-13", "invoice_ids": ["INV-001"], "message_id": "MSG-013",
+      "steps": ["process_message", "replay_same_message", "attempt_send_without_approval", "approve_draft", "send_approved_draft", "repeat_same_send"],
+      "expected": {"new_promise_count": 1, "new_followup_count": 1, "preapproval_send_blocked": true, "simulated_delivery_count": 1, "real_delivery_count": 0, "approval_logged": true}
+    },
+    {
+      "id": "TC-14", "invoice_ids": ["INV-014"], "draft_id": "DRAFT-014", "accounting_event": "ACC-014", "reference_time": "2026-10-03T10:05:00+03:00",
+      "steps": ["send_approved_draft_with_balance_recheck"],
+      "expected": {"balance": "0.00", "status": "settled", "draft_invalidated": true, "open_collection_tasks": 0, "block_reason_logged": true, "sent_count": 0}
+    },
+    {
+      "id": "TC-15", "invoice_ids": ["INV-001"], "message_id": "MSG-001", "accounting_event": "ACC-015",
+      "steps": ["process_TC_01_message", "restart_application", "advance_time_to_2026_10_06_10_00", "run_due_balance_check", "restart_application"],
+      "expected": {"promise_preserved": true, "history_preserved": true, "approval_state_preserved": true, "balance": "3000.00", "promise_status": "missed", "no_duplicate_promise": true, "due_check_processed_once": true, "state_persisted": true, "sent_count": 0}
+    }
+  ]
+}

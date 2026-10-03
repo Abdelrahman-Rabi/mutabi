@@ -1,0 +1,68 @@
+{
+  "date": "2026-10-04",
+  "mode": "offline controlled interpretations; temporary synthetic databases",
+  "live_model_calls": 0,
+  "observations": [
+    {
+      "probe": "payment_claim_response_blocked",
+      "workflow_status": "awaiting_payment_verification",
+      "send": {
+        "sent": false,
+        "reason": "PAYMENT_VERIFICATION_PENDING"
+      }
+    },
+    {
+      "probe": "invoice_dispute_response_blocked",
+      "workflow_status": "dispute_pending_review",
+      "send": {
+        "sent": false,
+        "reason": "DISPUTE_REVIEW_REQUIRED"
+      }
+    },
+    {
+      "probe": "full_payment_of_partial_promise",
+      "promised_minor": 100000,
+      "verified_payment_minor": 100000,
+      "invoice_remaining_minor": 200000,
+      "actual_status": "partially_fulfilled",
+      "expected_status": "fulfilled promise; invoice still open",
+      "actual_draft": "The payment promised for 2026-10-05 on INV-001 has not been fully received. The remaining balance is SAR 2,000.00. Please confirm a payment date."
+    },
+    {
+      "probe": "revised_promise_has_no_supersession",
+      "active_promises": [
+        {
+          "date": "2026-10-05",
+          "amount_minor": 100000
+        },
+        {
+          "date": "2026-10-07",
+          "amount_minor": 100000
+        }
+      ]
+    },
+    {
+      "probe": "clarification_has_no_prior_turn_context",
+      "interpreter_inputs": [
+        {
+          "text": "Yes, October 4, 2026.",
+          "reference_date": "2026-10-03"
+        }
+      ],
+      "actual_status": "awaiting_clarification",
+      "still_missing": [
+        "amount"
+      ]
+    },
+    {
+      "probe": "explicit_arabic_date_forced_to_confirmation",
+      "validated_decision": {
+        "intent": "payment_promise",
+        "amount": "3000",
+        "payment_date": "2026-10-05",
+        "date_requires_confirmation": true,
+        "reason": "Explicit Arabic date"
+      }
+    }
+  ]
+}

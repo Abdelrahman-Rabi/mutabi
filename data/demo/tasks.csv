@@ -1,0 +1,5 @@
+task_id,invoice_id,promise_id,task_type,due_date,status
+TASK-002,INV-002,,overdue_followup,2026-10-03,pending
+TASK-004,INV-004,PROM-004,balance_check,2026-10-03,pending
+TASK-005,INV-005,PROM-005,balance_check,2026-10-03,pending
+TASK-006,INV-006,PROM-006,balance_check,2026-10-03,pending

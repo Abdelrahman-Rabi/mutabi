@@ -1,0 +1,14 @@
+customer_id,name,currency,timezone,channel,contact_reference
+C001,Demo Grocery A,SAR,Asia/Riyadh,simulated,C001-INBOX
+C002,Demo Grocery B,SAR,Asia/Riyadh,simulated,C002-INBOX
+C003,Demo Grocery C,SAR,Asia/Riyadh,simulated,C003-INBOX
+C004,Demo Grocery D,SAR,Asia/Riyadh,simulated,C004-INBOX
+C005,Demo Grocery E,SAR,Asia/Riyadh,simulated,C005-INBOX
+C006,Demo Grocery F,SAR,Asia/Riyadh,simulated,C006-INBOX
+C007,Demo Grocery G,SAR,Asia/Riyadh,simulated,C007-INBOX
+C008,Demo Grocery H,SAR,Asia/Riyadh,simulated,C008-INBOX
+C009,Demo Grocery I,SAR,Asia/Riyadh,simulated,C009-INBOX
+C010,Demo Grocery J,SAR,Asia/Riyadh,simulated,C010-INBOX
+C011,Demo Grocery K,SAR,Asia/Riyadh,simulated,C011-INBOX
+C012,Demo Grocery L,SAR,Asia/Riyadh,simulated,C012-INBOX
+C014,Demo Grocery N,SAR,Asia/Riyadh,simulated,C014-INBOX

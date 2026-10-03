@@ -1,0 +1,8 @@
+# Generated application state; synthetic source fixtures remain versioned.
+runtime/*
+!runtime/.gitkeep
+__pycache__/
+.venv/
+.env
+.env.*
+!.env.example

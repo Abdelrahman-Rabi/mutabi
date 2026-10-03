@@ -1,0 +1,114 @@
+{
+  "run_at_utc": "2026-10-03T10:52:42.333425+00:00",
+  "mode": "live Gemini interpretation plus synthetic tools/accounting",
+  "tests_run": 15,
+  "successful": false,
+  "results": [
+    {
+      "test": "test_TC01_clear_promise",
+      "status": "error",
+      "detail": "Gemini API returned HTTP 503. Check key, model access, or quota."
+    },
+    {
+      "test": "test_TC02_vague_promise",
+      "status": "pass"
+    },
+    {
+      "test": "test_TC03_unverified_payment",
+      "status": "error",
+      "detail": "Gemini API returned HTTP 503. Check key, model access, or quota."
+    },
+    {
+      "test": "test_TC04_full_payment",
+      "status": "pass"
+    },
+    {
+      "test": "test_TC05_partial_payment",
+      "status": "pass"
+    },
+    {
+      "test": "test_TC06_missed_promise",
+      "status": "pass"
+    },
+    {
+      "test": "test_TC07_dispute",
+      "status": "error",
+      "detail": "Gemini API returned HTTP 503. Check key, model access, or quota."
+    },
+    {
+      "test": "test_TC08_relative_date",
+      "status": "error",
+      "detail": "Gemini API returned HTTP 503. Check key, model access, or quota."
+    },
+    {
+      "test": "test_TC09_missing_invoice",
+      "status": "error",
+      "detail": "Gemini API returned HTTP 503. Check key, model access, or quota."
+    },
+    {
+      "test": "test_TC10_conditional_offer",
+      "status": "error",
+      "detail": "Gemini API returned HTTP 429. Check key, model access, or quota."
+    },
+    {
+      "test": "test_TC11_failed_source",
+      "status": "pass"
+    },
+    {
+      "test": "test_TC12_untrusted_instructions",
+      "status": "error",
+      "detail": "Gemini API returned HTTP 429. Check key, model access, or quota."
+    },
+    {
+      "test": "test_TC13_retries_and_approval",
+      "status": "error",
+      "detail": "Gemini API returned HTTP 429. Check key, model access, or quota."
+    },
+    {
+      "test": "test_TC14_stale_approved_draft",
+      "status": "pass"
+    },
+    {
+      "test": "test_TC15_restart_and_advance_time",
+      "status": "error",
+      "detail": "Gemini API returned HTTP 429. Check key, model access, or quota."
+    }
+  ],
+  "model_calls": [
+    {
+      "reply": "I'll pay soon.",
+      "reference_date": "2026-10-03",
+      "decision": {
+        "intent": "incomplete_payment_promise",
+        "amount": null,
+        "payment_date": null,
+        "date_requires_confirmation": false,
+        "reason": "Customer expressed an intent to pay in the future but did not provide a specific date or amount."
+      },
+      "elapsed_seconds": 5.125,
+      "metadata": {
+        "provider": "gemini",
+        "model": "gemini-3.8-flash",
+        "usage": {
+          "promptTokenCount": 266,
+          "candidatesTokenCount": 84,
+          "totalTokenCount": 502,
+          "promptTokensDetails": [
+            {
+              "modality": "TEXT",
+              "tokenCount": 266
+            }
+          ],
+          "thoughtsTokenCount": 152,
+          "serviceTier": "standard"
+        }
+      }
+    }
+  ],
+  "limitations": [
+    "Single run per scenario; not a statistical reliability estimate.",
+    "Accounting and outbound delivery are simulated.",
+    "English fixtures only; Arabic variants not evaluated.",
+    "TC-04,05,06,11,14 are deterministic workflows without a language-model call."
+  ]
+}

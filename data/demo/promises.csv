@@ -1,0 +1,4 @@
+promise_id,invoice_id,amount,currency,promised_date,status,recorded_at,source_message_id
+PROM-004,INV-004,2500.00,SAR,2026-10-02,active,2026-10-01T10:00:00+03:00,MSG-SEED-004
+PROM-005,INV-005,5000.00,SAR,2026-10-02,active,2026-10-01T10:00:00+03:00,MSG-SEED-005
+PROM-006,INV-006,3000.00,SAR,2026-10-02,active,2026-10-01T10:00:00+03:00,MSG-SEED-006

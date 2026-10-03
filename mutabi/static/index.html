@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Mutabi — Collections workspace</title>
+  <link rel="stylesheet" href="/style.css"><script src="/i18n.js" defer></script><script src="/app.js" defer></script>
+</head>
+<body>
+  <aside class="rail"><a class="brand" href="/" aria-label="Mutabi home"><span class="mark">m</span>mutabi<span class="brand-dot">.</span></a>
+    <div class="rail-label">YOUR WORKSPACE</div><div class="rail-item active">◫ &nbsp; Collections</div>
+    <div class="rail-copy">Keep every<br>payment promise<br>in view.</div>
+    <div class="rail-footer"><span class="online-dot"></span> Local demo<br><small>Synthetic data · SAR</small></div>
+  </aside>
+  <main>
+    <header><div><div class="eyebrow">COLLECTIONS WORKSPACE</div><h1>Follow up with clarity.</h1><p>Review the reply. Record the promise. Know what comes next.</p></div><div class="header-status"><button class="secondary" id="languageSwitch" aria-label="Switch to Arabic">العربية</button><span class="pill" id="modelStatus">Loading…</span><span class="subtle">All deliveries are simulated</span></div></header>
+    <section class="provider-settings" id="providerSettings" aria-label="AI provider settings"></section>
+    <section class="metrics" aria-label="Workspace summary" id="metrics"></section>
+    <section class="controls"><div><span class="eyebrow">DEMO CLOCK</span><label for="demoDate" class="sr-only">Demo date</label><input type="date" id="demoDate"><button class="secondary" id="advanceClock">Set date</button><span class="subtle" id="clockLabel"></span></div><button class="text-button" id="resetDemo">Reset demo workspace</button></section>
+    <div id="notice" role="status" aria-live="polite" hidden></div>
+    <section class="workbench"><div class="queue"><div class="section-head"><h2>Customer cases</h2><span class="count" id="caseCount"></span></div><label for="search" class="sr-only">Search cases</label><input type="search" id="search" placeholder="Search customer or invoice…"><div id="caseList"></div></div>
+      <div class="detail" id="detail"><p>Loading your workspace…</p></div>
+    </section>
+    <footer>Mutabi prototype · AI interprets replies · Accounting and contact channels are simulated</footer>
+  </main>
+  <dialog id="resetDialog"><h2>Start a fresh demo?</h2><p>This clears promises, drafts, approvals, and history in this synthetic workspace and restores the original examples.</p><div class="dialog-actions"><button class="secondary" id="cancelReset">Keep workspace</button><button id="confirmReset">Reset demo</button></div></dialog>
+</body></html>
