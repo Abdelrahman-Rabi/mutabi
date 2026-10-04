@@ -42,6 +42,18 @@ CREATE TABLE IF NOT EXISTS audit_events (
 CREATE TABLE IF NOT EXISTS deliveries (
  delivery_id TEXT PRIMARY KEY, draft_id TEXT NOT NULL UNIQUE REFERENCES drafts(draft_id),
  delivered_at TEXT NOT NULL, channel TEXT NOT NULL CHECK(channel='simulated'));
+CREATE TABLE IF NOT EXISTS draft_options (
+ draft_id TEXT PRIMARY KEY REFERENCES drafts(draft_id),
+ purpose TEXT NOT NULL CHECK(purpose IN ('collection','acknowledgment','verification','dispute')),
+ language TEXT NOT NULL CHECK(language IN ('en','ar')));
+CREATE TABLE IF NOT EXISTS promise_allocations (
+ allocation_id TEXT PRIMARY KEY, promise_id TEXT NOT NULL REFERENCES promises(promise_id),
+ payment_reference TEXT NOT NULL, amount_minor INTEGER NOT NULL CHECK(amount_minor > 0),
+ created_at TEXT NOT NULL, UNIQUE(promise_id,payment_reference));
+CREATE TABLE IF NOT EXISTS promise_revisions (
+ old_promise_id TEXT PRIMARY KEY REFERENCES promises(promise_id),
+ new_promise_id TEXT NOT NULL UNIQUE REFERENCES promises(promise_id),
+ reason TEXT NOT NULL, actor TEXT NOT NULL, created_at TEXT NOT NULL);
 CREATE TABLE IF NOT EXISTS demo_accounting_events (
  event_id TEXT PRIMARY KEY, scenario_id TEXT NOT NULL,
  invoice_id TEXT NOT NULL REFERENCES invoices(invoice_id), available_at TEXT NOT NULL,

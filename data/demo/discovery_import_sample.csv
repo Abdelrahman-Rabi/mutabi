@@ -1,0 +1,6 @@
+invoice_id,customer_id,customer_name,original_amount,outstanding_balance,due_date
+DISC-001,DISC-C1,Synthetic Horizon Market,4500.50,2000.25,2026-09-20
+DISC-002,DISC-C1,Synthetic Horizon Market,1500.00,1500.00,2026-10-05
+DISC-003,DISC-C2,Synthetic Palm Trading,8000.00,8000.00,2026-08-12
+DISC-004,DISC-C3,Synthetic North Pharmacy,3200.00,1200.00,2026-09-28
+DISC-005,DISC-C4,Synthetic Oasis Supplies,2700.00,0.00,2026-09-10

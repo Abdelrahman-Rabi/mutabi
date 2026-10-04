@@ -4,7 +4,7 @@ import csv
 import hashlib
 import json
 from datetime import date, datetime
-from decimal import Decimal
+from decimal import Decimal, InvalidOperation
 from pathlib import Path
 
 from .database import connect, counts, initialize
@@ -18,7 +18,10 @@ OWNER = 'mutabi-synthetic-demo-v1'
 def minor(value):
     if not value:
         return None
-    amount = Decimal(value) * 100
+    try:
+        amount = Decimal(value) * 100
+    except (InvalidOperation, TypeError, ValueError):
+        raise ValueError('Invalid monetary value') from None
     if not amount.is_finite() or amount != amount.to_integral_value() or amount < 0:
         raise ValueError(f'Invalid monetary value: {value}')
     return int(amount)
@@ -72,6 +75,13 @@ def load_demo(path=DEFAULT_DB, directory=DEMO_DIR, reset=False):
             return {'action': 'already_loaded', 'counts': counts(db)}
         with db:
             if reset:
+                # Discovery extensions reference base rows. Keep participant
+                # feedback and research history through disposable demo resets.
+                extensions = ('reviews', 'notes', 'task_assignments', 'customer_profiles',
+                              'draft_options', 'promise_allocations', 'promise_revisions')
+                for table in extensions:
+                    if db.execute("SELECT 1 FROM sqlite_master WHERE type='table' AND name=?", (table,)).fetchone():
+                        db.execute(f'DELETE FROM {table}')
                 for table in ('deliveries', 'audit_events', 'disputes', 'tasks', 'drafts',
                               'promises', 'demo_accounting_events', 'messages', 'invoices', 'customers', 'metadata'):
                     db.execute(f'DELETE FROM {table}')

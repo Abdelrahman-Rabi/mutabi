@@ -1,0 +1,35 @@
+# Advanced Mutabi discovery product
+
+Build a finished, self-contained bilingual discovery workspace on the existing Python/SQLite stack. Synthetic data and simulated delivery remain visible. No API credentials are required to experience curated examples; live providers remain optional in settings. User has authorized implementation and routine choices without further confirmation.
+
+## Deliverables
+
+- Overview with real derived metrics, aging chart, weekly commitments, next actions.
+- Collections queue, customer workspace with conversation/invoices/promises/history, review/assignment/notes.
+- Promise lifecycle with installment fulfillment, explicit amendment and payment allocation.
+- Approval center with editable bilingual drafts, purposes, approval invalidation, guarded simulated delivery.
+- Tasks board with assignees, due dates, resolution, dispute/payment review.
+- Analytics from actual synthetic workspace state; no invented measured outcomes.
+- Feedback center: persistent ratings/text, research events, feedback export; no actual customer contact.
+- Settings: team roles (demo identities), policy, language, integrations accurately marked simulated/unconnected, provider connection.
+- Demo studio: curated stories, advance clock, accounting simulation, reset with confirmation.
+- Browser session isolation, safe exports, documentation, meaningful backend/HTTP tests and browser validation; local Git commit.
+
+## Ownership and contract
+
+Core specialist owns `mutabi/tools.py`, `mutabi/workflow.py`, `mutabi/database.py`, `mutabi/demo.py`, `mutabi/gemini.py` and focused core tests. Preserve current schema columns and positional inserts. New optional auxiliary tables go in database SCHEMA; reset deletes auxiliary tables before base tables. Use draft_options(draft_id PK FK drafts, purpose TEXT, language TEXT) and promise_allocations(allocation_id PK, promise_id FK, payment_reference TEXT, amount_minor INTEGER, created_at TEXT), plus promise_revisions(old_promise_id FK, new_promise_id FK, reason TEXT, actor TEXT, created_at TEXT). Tools.draft_message(..., purpose='collection', language='en') backwards compatible; supported purposes collection, acknowledgment, verification, dispute. Add Tools.edit_draft, reject_draft, amend_promise, allocate_payment; explicit allocation cannot exceed verified event amount or reuse payment money. Add Workflow.confirm_message(message_id, amount, payment_date, actor, replace_promise_id=None, reason='') for reviewed completion without reinterpretation. Core sends preserve balance/freshness/rate guards; purpose-specific exemption only for verification/dispute administrative messages. Update bilingual workflow templates.
+
+Product specialist owns new `mutabi/product.py` and `tests/test_product.py`. Expose initialize_product(path, now), product_snapshot(path, now), product_action(path, now, action, data). Product seed uses existing fixtures, adds customer_profiles(customer_id,name_ar,segment,city,owner,language,priority,credit_limit_minor), task_assignments(task_id,owner), notes(note_id,invoice_id,text,actor,created_at), reviews(message_id,status,amount,payment_date,reason), feedback(feedback_id,rating,category,text,role,created_at,view), research_events(event_id,event,view,created_at,details_json), workspace_settings(key,value), integration_settings(key,status,last_sync). Idempotent seed, no source fingerprint changes. product_snapshot returns customers, profiles, assignments, notes, reviews, feedback, research_events, settings, integrations, team, assumptions, stories. product_action supported assign_task(task_id,owner), complete_task(task_id,reason), add_note(invoice_id,text,actor), resolve_dispute(dispute_id,resolution,reason,actor), resolve_verification(invoice_id,reason,actor), assign_message(message_id,invoice_id), feedback(rating,category,text,role,view), event(event,view,details), settings(settings object), simulate_payment(invoice_id,amount,reference,promise_id optional), story(story_id), export. Imports core methods only once available; no editing core files. Provide curated demo interpreter fixture mapping plus cautious deterministic new text parsing/manual review (clearly demo, not live AI), with exact amount/date evidence and no unbounded guessing. Prefer fixture mapping only + manual review for free text. Stories list IDs promise, clarification, payment, dispute, installment, reschedule with setup fresh fixture data and clear narrative. Product actions may orchestrate Tools/Workflow.
+
+Frontend specialist owns all `mutabi/static/*`. Use vanilla JS, local assets, no framework/build/runtime dependencies. Endpoint GET /api/state retains invoices,messages,promises,tasks,drafts,disputes,audit_events,deliveries,now,provider,chatgpt,model,model_ready,accounting_scenarios plus product snapshot keys. Extra draft_options,promise_allocations,promise_revisions available raw. POST /api/action/{name} with X-Demo-Token from /api/session; response {result:...}, errors {error:...}. Core actions existing; new confirm_message uses message_id,amount,payment_date,actor,replace_promise_id,reason. edit_draft uses draft_id,text,language,purpose; reject_draft(draft_id,reason), amend_promise(promise_id,amount,payment_date,reason,actor), allocate_payment(promise_id,payment_reference,amount). Above product actions supported. provider demo is default, gemini/chatgpt_plan optional. core process curated demo works without credentials; arbitrary replies require manual review. New messages stored via add_reply. Download /api/export?format=json|csv exports per-session state/feedback. All visible controls work; use native dialog accessible forms, Arabic/English strings via explicit translation dictionary and RTL/responsive CSS. Refined teal/ink/paper visual system with side navigation, density, charts (SVG permitted), meaningful empty states, keyboard navigation, no external fonts. Feedback accessible persistently in nav and contextual dialog. Accurate synthetic labels and underlying metric basis. Initial dashboard rich but derived. Each story selection requires confirmation because replaces disposable workspace, preserves feedback/research history.
+
+Parent owns web.py session isolation/action dispatch, integration, documentation, manual browser tests, Git commit. Existing 65 tests remain passing or changes justified by corrected policy. Add meaningful regression coverage and run all tests.
+
+## Completion gates
+
+- All main views and actions functional in both languages; no placeholder navigation.
+- Manual correction, draft edit/approval/send, dispute resolution, installment full fulfillment, promise amendment, notes/task assignment, feedback persist across reload.
+- New browser contexts isolated; reset confined to participant workspace and feedback retained.
+- No paid calls required; live extraction clearly distinct from demo interpretation.
+- CSV/JSON export safe, no credentials or account metadata.
+- Tests and browser walkthrough, desktop/mobile RTL check, documented limitations, commit.

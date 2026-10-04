@@ -1,6 +1,12 @@
 # Mutabi
 
-FMCG payment-promise follow-up prototype with a bilingual local browser interface, SQLite storage, synthetic demo loader, persistent business tools, and guarded workflows. Reply interpretation supports ChatGPT plan authorization or Gemini API. All 15 approved scenarios passed separate live evaluations using each provider, with simulated accounting and delivery.
+An advanced bilingual discovery workspace for FMCG payment-promise follow-up. Explore collections, customer conversations, reviewed commitments, tasks, approvals, analytics, participant feedback, settings, and curated demo stories. SQLite persists the work; each browser session receives its own synthetic workspace. Accounting and message delivery are simulated.
+
+The default **recorded demo examples** mode needs no API credentials. Its exact curated scripts are clearly distinguished from live AI; free-form replies require employee review and manual confirmation. ChatGPT plan authorization and Gemini remain optional live interpretation providers.
+
+See [the discovery product guide](docs/ADVANCED_PRODUCT_GUIDE.md) for the full walkthrough, assumptions, participant sessions, exports, and limitations.
+
+[الدليل بالعربية](docs/ADVANCED_PRODUCT_GUIDE_AR.md) · [دليل جلسة الاكتشاف](docs/DISCOVERY_SESSION_AR.md) · [Release validation](docs/ADVANCED_VALIDATION.md)
 
 ## Start the demo interface
 
@@ -17,13 +23,15 @@ On Windows PowerShell:
 .\.venv\Scripts\python.exe -m mutabi.web
 ```
 
+For repeat launches, `.\Start-Mutabi.ps1` starts a separate advanced demo database. Set `-Port 8877` if the default port is already in use.
+
 On macOS/Linux, activate `.venv`, install `requirements.txt`, and run:
 
 ```sh
 python -m mutabi.web
 ```
 
-Open http://127.0.0.1:8765/ in your browser. Select **ChatGPT plan**, click **Continue with ChatGPT**, and complete OpenAI sign-in and permission. The server loads the synthetic baseline if needed, keeps credentials server-side, and preserves state across restarts. No frontend build is required. Stop with Ctrl+C. See [ChatGPT setup](docs/CHATGPT_SETUP.md) for connection and testing steps. Gemini remains a selectable alternative using your local `.env`.
+Open http://127.0.0.1:8765/ in your browser. The complete workspace is ready in demo mode. Use Settings to opt into **ChatGPT plan** or **Gemini** for live interpretation. The server loads a synthetic baseline, keeps credentials server-side, and preserves each browser workspace across restarts. No frontend build is required. Stop with Ctrl+C. See [ChatGPT setup](docs/CHATGPT_SETUP.md) for connection and testing steps.
 
 For a separate demo workspace:
 
@@ -31,7 +39,7 @@ For a separate demo workspace:
 python -m mutabi.web --db runtime/ui-demo.db --port 8765
 ```
 
-The interface runs locally, not as a public hosted service. Demo approval uses the fixed identity `DEMO-EMPLOYEE`; production authentication is not implemented. It accepts synthetic replies only for reviewer testing. See `docs/DEMO_WALKTHROUGH.md` for the main story and other scenarios.
+The interface runs locally. Browser sessions have separate synthetic workspaces; the selected demo team identity records employee actions. Production authentication is not implemented. See `docs/ADVANCED_PRODUCT_GUIDE.md` for current stories; the earlier walkthrough remains historical POC documentation.
 
 ## Requirements
 
@@ -83,7 +91,7 @@ python -m mutabi.agent prepare --invoice INV-011 --scenario TC-11
 
 `process` uses live Gemini for a new reply. Its validated interpretation is persisted; completed replies replay the saved result without new mutations. The workflow creates drafts for employee approval, never automatically sends them. `followups`, `prepare`, and `context` run without a model key. Follow-ups execute on demand; an always-on background scheduler is not implemented.
 
-The workflow supports clear/vague promises, payment claims, disputes, ambiguous dates, missing invoice references, conditional offers, and suspicious instructions. It records full settlement, partial/missed promises, review tasks, and audit history. Draft wording currently uses English templates; Gemini handles structured interpretation rather than message generation. Arabic response templates remain future work.
+The workflow supports clear/vague promises, payment claims, disputes, ambiguous dates, missing invoice references, conditional offers, and suspicious instructions. It records settlement, installment fulfillment, partial/missed promises, explicit revisions, review tasks, and audit history. Drafts use Arabic/English templates according to customer preference; the model handles structured interpretation rather than message generation. Employees can confirm extracted details and edit/reject drafts before approval.
 
 ### Validation evidence
 
@@ -103,4 +111,4 @@ The current report and previous report distinguish actual live execution from of
 
 ### Interface language
 
-Use the العربية / English button to switch interfaces. Arabic includes right-to-left layout, Gregorian dates, and SAR amounts. The browser remembers your preference. Switching preserves the selected case, accounting scenario, and unsaved reply text. Customer replies and stored drafts retain their original text; outbound draft templates currently remain English.
+Use the العربية / English button to switch interfaces. Arabic includes right-to-left layout, Gregorian dates, and SAR amounts. The browser remembers your preference. Customer replies retain their original text; draft templates follow the customer's configured language, and editable drafts support either language.

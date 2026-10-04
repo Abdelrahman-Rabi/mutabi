@@ -67,7 +67,7 @@ class WebTests(unittest.TestCase):
             with urlopen(base+'/api/session') as response:
                 token = json.load(response)['token']
             with urlopen(base+'/') as response:
-                self.assertIn('Follow up with clarity.',response.read().decode())
+                self.assertIn('id="app"',response.read().decode())
                 self.assertIn("script-src 'self'",response.headers['Content-Security-Policy'])
             bad = Request(base+'/api/action/reset',data=b'{}',headers={'Content-Type':'application/json'})
             with self.assertRaises(HTTPError) as error:

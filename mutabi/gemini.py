@@ -69,7 +69,7 @@ def load_local_env(path):
 
 def validate_evidence(value, text):
     result = validate_decision(value)
-    translated = str.maketrans('٠١٢٣٤٥٦٧٨٩٬٫', '0123456789,.')
+    translated = str.maketrans('٠١٢٣٤٥٦٧٨٩۰۱۲۳۴۵۶۷۸۹٬٫', '01234567890123456789,.')
     if result['amount'] is not None:
         quote = value.get('amount_evidence')
         if not isinstance(quote, str) or not quote or quote not in text:
@@ -86,12 +86,23 @@ def validate_evidence(value, text):
         # Confirm exact full dates we can deterministically parse. Other date
         # formats or relative expressions remain candidates for confirmation.
         parsed = None
+        normalized = quote.strip().translate(translated)
         for fmt in ('%Y-%m-%d', '%B %d, %Y', '%B %d %Y', '%d %B %Y'):
             try:
-                parsed = datetime.strptime(quote.strip(), fmt).date().isoformat()
+                parsed = datetime.strptime(normalized, fmt).date().isoformat()
                 break
             except ValueError:
                 pass
+        if parsed is None:
+            # Arabic Gregorian dates with an explicit year are as unambiguous
+            # as English month names. Numeric day/month dates remain candidates.
+            months = {'يناير': 1, 'فبراير': 2, 'مارس': 3, 'أبريل': 4, 'ابريل': 4,
+                      'مايو': 5, 'يونيو': 6, 'يونيه': 6, 'يوليو': 7, 'يوليه': 7,
+                      'أغسطس': 8, 'اغسطس': 8, 'سبتمبر': 9, 'أكتوبر': 10,
+                      'اكتوبر': 10, 'نوفمبر': 11, 'ديسمبر': 12}
+            match = re.fullmatch(r'(?:يوم\s+)?(\d{1,2})\s+(' + '|'.join(months) + r')\s+(\d{4})', normalized)
+            if match:
+                parsed = datetime(int(match[3]), months[match[2]], int(match[1])).date().isoformat()
         if parsed is None:
             result['date_requires_confirmation'] = True
         elif parsed != result['payment_date']:
