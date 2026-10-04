@@ -4,7 +4,7 @@ Verified locally on 4 October 2026. This records implementation checks, not cust
 
 ## Automated checks
 
-- `python -m unittest discover -s tests`: **118 passed** (latest complete run: 22.9 seconds).
+- `python -m unittest discover -s tests`: **119 passed** (latest complete run: 63.644 seconds).
 - `node --check mutabi/static/app.js` and `node --check mutabi/static/i18n.js`: passed after the final interface corrections.
 - PowerShell launcher parsed successfully; the final preview is launched through `Start-Mutabi.ps1`.
 - Git whitespace checks passed. Generated SQLite databases, credentials, environment files and dependencies remain ignored.
@@ -38,6 +38,14 @@ Performed in the Codex in-app browser using the actual local HTTP server and int
 The final preview uses a separate clean release database, preserving the development-session test evidence without presenting test ratings as customer feedback. Research/session databases stay local under ignored `runtime/` paths.
 
 Saved views: [English desktop](screenshots/advanced-overview-en.jpg), [Arabic desktop](screenshots/advanced-overview-ar.jpg), and [Arabic mobile](screenshots/advanced-mobile-ar.jpg).
+
+## Arabic refresh regression — 4 October 2026
+
+Reproduced the reported `Cannot read properties of undefined (reading 'map')` in the open browser. Arabic Demo Studio attempted to map a missing scenario steps list. Failed navigation retained the previous screen while leaving Studio selected internally, so clicking تحديث repeated the rendering error.
+
+Scenario steps now use an array-checked Arabic preference, English fallback and empty-list default. The new frontend regression test renders the actual backend snapshot across all nine views in both languages and covers missing, null and malformed optional steps. It runs through Node when available; Node is not required by the application runtime.
+
+Rechecked all nine views in Arabic and English in the running browser, then refreshed successfully in both languages. No new console errors appeared during those checks. The browser remains on Arabic Overview with a successful refresh; [saved screenshot](screenshots/refresh-fixed-ar.jpg).
 
 ## Scope of the evidence
 
