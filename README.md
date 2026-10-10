@@ -1,114 +1,140 @@
-# Mutabi
+# Mutabi — payment-promise follow-up for small businesses
 
-An advanced bilingual discovery workspace for FMCG payment-promise follow-up. Explore collections, customer conversations, reviewed commitments, tasks, approvals, analytics, participant feedback, settings, and curated demo stories. SQLite persists the work; each browser session receives its own synthetic workspace. Accounting and message delivery are simulated.
+Mutabi helps a distributor turn customer replies into recorded payment commitments, owned balance checks, and reviewed follow-up. An employee approves every outgoing message. Accounting evidence determines whether a commitment is paid, partly paid, missed, or needs finance review.
 
-The default **recorded demo examples** mode needs no API credentials. Its exact curated scripts are clearly distinguished from live AI; free-form replies require employee review and manual confirmation. ChatGPT plan authorization and Gemini remain optional live interpretation providers.
+**Reviewers: start with the credential-free demo below.** The source includes a working bilingual web interface, SQLite persistence, workflow/tool code, synthetic fixtures, and automated tests. The default interpretation provider recognizes exact curated examples; arbitrary replies require manual review. Optional live Gemini and ChatGPT providers are separate from the offline demonstration.
 
-See [the discovery product guide](docs/ADVANCED_PRODUCT_GUIDE.md) for the full walkthrough, assumptions, participant sessions, exports, and limitations.
+## Run in under five minutes
 
-[الدليل بالعربية](docs/ADVANCED_PRODUCT_GUIDE_AR.md) · [دليل جلسة الاكتشاف](docs/DISCOVERY_SESSION_AR.md) · [Release validation](docs/ADVANCED_VALIDATION.md)
+Prerequisites: **Python 3.10+** and a current browser. Installing Python, if it is not already present, is outside this startup target. The default demo needs **no API key, sign-in, pip install, Node.js, Docker, or frontend build**.
 
-## Start the demo interface
+Download/extract the submission source ZIP, or clone the public repository:
 
-Create a Python environment and install the OAuth identity-validation dependency:
+```sh
+git clone https://github.com/Abdelrahman-Rabi/mutabi.git
+cd mutabi
+```
+
+Open a terminal in the folder containing `run_demo.py` and `README.md`.
+
+**Windows:**
+
+```powershell
+py -3 run_demo.py
+```
+
+**macOS / Linux:**
+
+```sh
+python3 run_demo.py
+```
+
+If your Python command is `python`, use `python run_demo.py` instead. Open **http://127.0.0.1:8765/**. The server creates and seeds the demo database automatically. Leave the terminal running; **Ctrl+C** stops it.
+
+The module entry point is equivalent: `python -m mutabi.web`. Windows users can also use the existing `Start-Mutabi.ps1` launcher.
+
+### Verify the agent workflow immediately
+
+In a second terminal, run:
+
+```powershell
+py -3 run_demo.py --check
+```
+
+On macOS/Linux: `python3 run_demo.py --check`. Add `--json` for machine-readable evidence.
+
+This executes the actual workflow and business tools in disposable databases. It verifies promise capture and scheduling, blocked delivery before approval, approved simulated delivery, safe retries, a missed promise after fresh accounting verification, review of uncurated text, and installment fulfillment with debt still outstanding. It makes **zero live model calls** and does not modify your browser workspace. A failure exits with a nonzero code.
+
+## A three-minute reviewer walkthrough
+
+The baseline deliberately includes already-processed curated conversations so the workspace is useful immediately. Use the command above to see a fresh promise processed end to end.
+
+1. **Collections → Demo Grocery A (INV-001).** Open **Promises**: SAR 3,000 promised for 5 October 2026. Open **Tasks**: Sara owns the balance check due 6 October. The invoice balance is still SAR 3,000.
+2. **Conversation.** Find the acknowledgment draft, review it, click **Approve**, then **Send to simulated inbox**. Approval and delivery are separate actions. The delivery receipt is visible; no real customer is contacted.
+3. **Demo studio → Workspace clock.** Advance to **6 October 2026**. Under **Accounting scenario**, select **TC-15 · INV-001** and click **Verify scenario**. This supplies the fresh synthetic unpaid snapshot; advancing the date alone does not refresh accounting.
+4. **Collections → INV-001 → Run due follow-ups.** The promise becomes **Missed**, the balance remains SAR 3,000, and a new follow-up draft awaits employee approval.
+5. **Impact calculator.** The illustrative inputs project **50 hours freed per month**, not measured savings. At 0% cash realization, monthly net cash is **SAR -500**. Change **Saved capacity converted to cash** to **40%**: monthly net cash becomes **SAR 500**. Capacity value and cash benefit overlap; do not add them.
+
+Optional: **Demo studio → Fulfill an installment → Load story**, confirm the reset, and record a synthetic **SAR 1,000** payment for **INV-001**, allocating it to the **SAR 1,000** commitment. That promise becomes **Fulfilled** while the invoice still has **SAR 2,000** outstanding. Loading a story resets disposable business state in that browser workspace.
+
+Use the **العربية / English** button for the bilingual interface. Customer text and draft language follow the customer profile, independently of the interface language.
+
+## What is implemented
+
+- Structured reply interpretation followed by validation and guarded workflow actions.
+- Promise creation/revision, owner assignment, dated tasks, drafts, explicit approval, simulated delivery, and persisted audit history.
+- Verified payment allocation to individual commitments; invoice balance and installment fulfillment remain distinct.
+- Clarification and human review for ambiguous replies; finance holds for payment claims and disputes.
+- Checks for stale/changed accounting, unresolved finance review, excessive contact frequency, and retry duplication.
+- Session-isolated SQLite workspaces and Arabic/English views, plus an assumption-based impact calculator.
+
+The workflow runs checks **on demand**. This prototype has no always-on scheduler, live ERP/bank integration, real WhatsApp delivery, or production employee authentication. Demo team identities record actions but are not authenticated accounts. Synthetic records use SAR; the calculator can label scenarios in EGP and other currencies without exchange-rate conversion. No real SME savings or revenue uplift have been measured.
+
+## Optional live AI interpretation
+
+The offline path above is sufficient to run the workflow. To evaluate live extraction, choose a provider in **Settings**, then submit a **new synthetic reply**. Processing a completed reply replays the saved decision and does not call the model again.
+
+**Gemini:** copy `.env.example` to `.env`, enter your own `GEMINI_API_KEY`, and restart the server. Set `GEMINI_MODEL` to a compatible model available to your project; the adapter default is defined in [mutabi/gemini.py](mutabi/gemini.py). The adapter uses the standard library and sends the reply and reference date to the provider. Provider access, quotas, and usage charges apply.
+
+**ChatGPT:** install the optional OAuth dependency in an isolated environment, then follow [ChatGPT setup](docs/CHATGPT_SETUP.md).
 
 ```sh
 python -m venv .venv
 ```
 
-On Windows PowerShell:
+Windows:
 
 ```powershell
-.\.venv\Scripts\python.exe -m pip install -r requirements.txt
-.\.venv\Scripts\python.exe -m mutabi.web
+.venv/Scripts/python.exe -m pip install -r requirements.txt
+.venv/Scripts/python.exe run_demo.py
 ```
 
-For repeat launches, `.\Start-Mutabi.ps1` starts a separate advanced demo database. Set `-Port 8877` if the default port is already in use.
-
-On macOS/Linux, activate `.venv`, install `requirements.txt`, and run:
+macOS/Linux:
 
 ```sh
-python -m mutabi.web
+.venv/bin/python -m pip install -r requirements.txt
+.venv/bin/python run_demo.py
 ```
 
-Open http://127.0.0.1:8765/ in your browser. The complete workspace is ready in demo mode. Use Settings to opt into **ChatGPT plan** or **Gemini** for live interpretation. The server loads a synthetic baseline, keeps credentials server-side, and preserves each browser workspace across restarts. No frontend build is required. Stop with Ctrl+C. See [ChatGPT setup](docs/CHATGPT_SETUP.md) for connection and testing steps.
+Keep credentials local. The default demo does not call a provider even if a key is configured. Live evaluation is opt-in; see [evaluation/live.py](evaluation/live.py) and the setup guide before running it.
 
-For a separate demo workspace:
+## Validation
 
-```sh
-python -m mutabi.web --db runtime/ui-demo.db --port 8765
-```
-
-The interface runs locally. Browser sessions have separate synthetic workspaces; the selected demo team identity records employee actions. Production authentication is not implemented. See `docs/ADVANCED_PRODUCT_GUIDE.md` for current stories; the earlier walkthrough remains historical POC documentation.
-
-## Requirements
-
-Python 3.10 or later. The loader uses only the Python standard library; no installation or API credentials are needed.
-
-## Load and inspect demo data
-
-Run from the repository root:
+The offline reviewer check is the fastest way to verify the main journey. For the complete suite, install the optional requirements above and run:
 
 ```sh
-python -m mutabi.demo load
-python -m mutabi.demo status
 python -m unittest discover -s tests -v
 ```
 
-The database is created at `runtime/mutabi.db`, which is excluded from Git. Repeating `load` preserves runtime changes and does not duplicate rows. If source fixtures change, an explicit reset is required.
+Use your virtual environment's Python for this command. Node.js enables the two frontend rendering/calculator checks; those two checks are skipped when Node is absent. No live provider calls are required by the suite. Workflow tests use controlled interpretations, and provider adapter tests simulate responses; they do not establish general live-model accuracy or business impact.
 
-```sh
-python -m mutabi.demo reset
-```
+See [current validation evidence](docs/ADVANCED_VALIDATION.md) and [clean-package startup evidence](docs/REVIEWER_READINESS.md).
 
-Reset replaces generated demo state with the baseline, including tasks, approvals, and audit records. Use only for disposable synthetic runs. The loader refuses to replace databases with a different owner marker or existing unowned application data. Override the path with `--db path/to/demo.db` for independent scenarios.
+## Troubleshooting and saved state
 
-Money is stored as integer halalas, not floating-point values. Foreign-key constraints protect data relationships. Seed messages are marked processed; scenario messages remain pending. Accounting events are stored separately and do not automatically settle invoices. Loading does not execute the agent test cases.
+| Symptom | Action |
+|---|---|
+| `py` or `python` is not found | Install Python 3.10+ and reopen the terminal. On Windows, try `py -3` to bypass a Store alias. |
+| Port 8765 is occupied | Run `python run_demo.py --port 8766`; open http://127.0.0.1:8766/. |
+| Follow-up needs data review | Verify a fresh accounting snapshot for the same invoice and date, then retry. For the walkthrough use TC-15 after advancing to 6 October. |
+| New text is not interpreted in demo mode | Confirm amount/date through employee review, or explicitly configure a live provider. Curated examples are not a general language model. |
+| You want a fresh workspace | Use a private browser window or a new browser profile. **Demo studio → Reset workspace** replaces that session's synthetic business state. |
+| You want a separate database | Run `python run_demo.py --db runtime/reviewer-demo.db --port 8766`. |
 
-See `data/demo/README.md` for scenario mapping and `TEST_CASES.md` for approved behavior. Expected results in `tests/fixtures/` must never be supplied to the agent.
+Generated state is stored under ignored `runtime/`; browser session databases persist across restarts. Source fixtures remain unchanged. The server binds to `127.0.0.1`, so use it locally rather than exposing it as a production service.
 
-## Business tools
+## Source map and further reading
 
-`mutabi.tools.Tools` exposes invoice/message context, policy, accounting verification, promise recording with an atomic follow-up task, disputes, human review, drafts, and simulated sending. Supply a database path and an optional timezone-aware demo timestamp. A host-selected `scenario_id` routes simulated accounting reads; this routing must not be chosen by the model.
+| Path | Purpose |
+|---|---|
+| [mutabi/workflow.py](mutabi/workflow.py) | Validated orchestration and saved decisions for replay. |
+| [mutabi/tools.py](mutabi/tools.py) | Accounting verification, commitments, approvals, guarded delivery, and allocations. |
+| [mutabi/product.py](mutabi/product.py) | Curated demo provider, discovery stories, profiles, assignments, and synthetic payment sandbox. |
+| [mutabi/web.py](mutabi/web.py) / [mutabi/static](mutabi/static) | Local HTTP server, session isolation, and bilingual interface. |
+| [mutabi/reviewer_check.py](mutabi/reviewer_check.py) | Disposable end-to-end reviewer verification. |
+| [data/demo](data/demo) / [tests](tests) | Synthetic business inputs and offline regression suite. |
+| [mutabi/gemini.py](mutabi/gemini.py) / [mutabi/chatgpt_plan.py](mutabi/chatgpt_plan.py) | Optional live interpretation adapters. |
 
-Promise, task, dispute, draft, and delivery effects use stable identifiers for retries. Invoice association is validated. Sending requires employee approval, rechecks balances, and blocks stale balances, changed amounts, pending disputes, pending payment verification, and excessive contact frequency. `approve_draft` is an employee/UI action and must not be registered as a model-callable tool. The prototype does not yet implement authenticated employee sessions.
+[Product walkthrough](docs/ADVANCED_PRODUCT_GUIDE.md) · [Arabic guide](docs/ADVANCED_PRODUCT_GUIDE_AR.md) · [Calculator definitions](docs/IMPACT_CALCULATOR.md) · [Scenario behavior](TEST_CASES.md) · [SMB impact evidence](docs/SMB_IMPACT_EVIDENCE.md)
 
-The tool layer accepts structured arguments; it does not itself infer whether a customer's text contains an explicit promise or distinguish a malicious message. Interpretation is handled by the selected provider, followed by workflow validation and policy checks. Tool tests and controlled workflow tests are distinct from live-model evaluation.
-
-## Gemini setup and workflow
-
-Create a Gemini API key in Google AI Studio: https://aistudio.google.com/apikey
-Copy `.env.example` to `.env` and enter your key locally. Do not put it in chat or commit it. You can alternatively set `GEMINI_API_KEY` in your environment. The adapter sends the reply and reference date to Google; it does not send invoice data or test expectations. Use synthetic messages for the demo.
-
-`GEMINI_MODEL` defaults to `gemini-3.8-flash` and can be changed to a compatible model available to your project. API access and quotas depend on the Google project. The adapter uses the documented REST `generateContent` endpoint with structured JSON output; no third-party packages are required.
-
-```sh
-python -m mutabi.agent process --message MSG-001
-python -m mutabi.agent context --invoice INV-001
-python -m mutabi.agent followups --invoice INV-001 --now 2026-10-06T10:00:00+03:00 --scenario TC-15
-python -m mutabi.agent prepare --invoice INV-011 --scenario TC-11
-```
-
-`process` uses live Gemini for a new reply. Its validated interpretation is persisted; completed replies replay the saved result without new mutations. The workflow creates drafts for employee approval, never automatically sends them. `followups`, `prepare`, and `context` run without a model key. Follow-ups execute on demand; an always-on background scheduler is not implemented.
-
-The workflow supports clear/vague promises, payment claims, disputes, ambiguous dates, missing invoice references, conditional offers, and suspicious instructions. It records settlement, installment fulfillment, partial/missed promises, explicit revisions, review tasks, and audit history. Drafts use Arabic/English templates according to customer preference; the model handles structured interpretation rather than message generation. Employees can confirm extracted details and edit/reject drafts before approval.
-
-### Validation evidence
-
-On October 3, 2026, all 65 offline automated checks passed: 5 loader checks, 11 tool checks, 8 mocked Gemini adapter checks, 20 ChatGPT OAuth/stream checks, 16 workflow checks, and 5 web backend/HTTP checks. A browser walkthrough also exercised live reply processing, approval, simulated delivery, and a missed-promise follow-up.
-
-The workflow tests use controlled interpreter responses. They prove database/workflow behavior given those interpretations, not live Gemini classification accuracy. The adapter tests simulate API responses and do not call Google. See `docs/validation.md`. No real ERP or customer channel is connected.
-
-### Opt-in live evaluation
-
-```sh
-python -m evaluation.live --min-interval 15
-```
-
-This command calls Gemini using the local key and synthetic replies, uses isolated temporary databases, and saves `docs/live_evaluation.json`. It can incur API usage charges. The interval paces unique replies; duplicate fixture text reuses the interpretation within the run. `--model MODEL_NAME` explicitly overrides the model for evaluation without modifying `.env`. Temporary server errors receive bounded retries; rate/quota errors are reported without displaying API response bodies or credentials.
-
-The current report and previous report distinguish actual live execution from offline tests, including service errors. A successful small sample does not establish production reliability or measured business impact.
-
-### Interface language
-
-Use the العربية / English button to switch interfaces. Arabic includes right-to-left layout, Gregorian dates, and SAR amounts. The browser remembers your preference. Customer replies retain their original text; draft templates follow the customer's configured language, and editable drafts support either language.
+Test expectations in `tests/fixtures/` are evaluation artifacts, never agent inputs. Accounting scenario selection belongs to the host/reviewer, not the model.

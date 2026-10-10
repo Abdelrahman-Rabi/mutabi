@@ -9,6 +9,14 @@ from mutabi.web import DemoApp
 
 
 class FrontendContractTests(unittest.TestCase):
+    @unittest.skipUnless(shutil.which('node'), 'Node.js is needed for calculator checks')
+    def test_impact_scenario_arithmetic_and_edge_cases(self):
+        result = subprocess.run(
+            [shutil.which('node'), str(Path(__file__).with_name('impact_check.js'))],
+            encoding='utf-8', capture_output=True, timeout=20,
+        )
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+
     @unittest.skipUnless(shutil.which('node'), 'Node.js is needed for frontend rendering checks')
     def test_bilingual_views_render_actual_snapshot_with_optional_story_steps(self):
         with tempfile.TemporaryDirectory() as directory:

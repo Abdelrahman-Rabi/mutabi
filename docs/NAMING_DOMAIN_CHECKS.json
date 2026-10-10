@@ -1,0 +1,45 @@
+{
+  "research_date": "2026-10-04",
+  "checked_at_utc": "2026-10-04T08:53:57.7962412+00:00",
+  "records": [
+    {
+      "domain": "wafeno.com",
+      "source": "https://rdap.verisign.com/com/v1/domain/wafeno.com",
+      "http_status": 404,
+      "conclusion": "No registry record returned; registrar availability not verified"
+    },
+    {
+      "domain": "ahdan.com",
+      "source": "https://rdap.verisign.com/com/v1/domain/ahdan.com",
+      "http_status": 200,
+      "registered_name": "AHDAN.COM",
+      "registry_status": [
+        "client transfer prohibited"
+      ],
+      "conclusion": "Registry record found"
+    },
+    {
+      "domain": "wafilo.com",
+      "source": "https://rdap.verisign.com/com/v1/domain/wafilo.com",
+      "http_status": 404,
+      "conclusion": "No registry record returned; registrar availability not verified"
+    },
+    {
+      "domain": "awfio.com",
+      "source": "https://rdap.verisign.com/com/v1/domain/awfio.com",
+      "http_status": 404,
+      "conclusion": "No registry record returned; registrar availability not verified"
+    },
+    {
+      "domain": "pactello.com",
+      "source": "https://rdap.verisign.com/com/v1/domain/pactello.com",
+      "http_status": 200,
+      "registered_name": "PACTELLO.COM",
+      "registry_status": [
+        "client transfer prohibited"
+      ],
+      "conclusion": "Registry record found"
+    }
+  ],
+  "limitation": "Read-only .com registry checks. No registrar checkout, .ai checks, social handle checks, or trademark clearance performed."
+}

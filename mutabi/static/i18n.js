@@ -19,3 +19,35 @@ function localized(item,key){return language==='ar' ? (item[key+'_ar']||item[key
 Object.assign(AR,{'verification_reviewed':'اكتملت المراجعة المالية','Recorded demo examples':'أمثلة تجريبية معدّة','dispute_approved':'قُبل الاعتراض','dispute_rejected':'رُفض الاعتراض','dispute_adjusted':'عُدّل الرصيد بعد الاعتراض','invalidated':'أُلغي اعتمادها'});
 Object.assign(EN,{verification_reviewed:'Finance review completed',dispute_approved:'Dispute accepted',dispute_rejected:'Dispute rejected',dispute_adjusted:'Accounting adjustment verified',invalidated:'Invalidated'});
 Object.assign(AR,{'Close navigation':'إغلاق القائمة'});
+Object.assign(AR,{
+ 'Impact calculator':'حاسبة الأثر','Explore an assumed business case using your own workload and costs.':'استكشف حالة عمل افتراضية وفق حجم العمل والتكاليف لديك.',
+ 'Scenario projection — not measured impact':'تقدير لسيناريو افتراضي — ليس أثرًا مقاسًا',
+ 'The starting numbers are illustrative. Replace them with your estimates. Results do not demonstrate Mutabi performance or guarantee savings.':'الأرقام الأولية توضيحية. استبدلها بتقديراتك. النتائج لا تثبت أداء متابع ولا تضمن تحقيق وفر.',
+ 'Your assumptions':'افتراضاتك','Any repeatable workflow; use the same task definition before and after.':'أي سير عمل متكرر؛ استخدم التعريف نفسه للمهمة قبل استخدام الوكيل وبعده.',
+ 'Currency label':'العملة','All money inputs use this currency. No exchange-rate conversion.':'جميع المبالغ بهذه العملة. لا يجري تحويل أسعار الصرف.',
+ 'Tasks per month':'المهام شهريًا','Count tasks across the whole team, once each.':'احسب مهام الفريق كاملًا، كل مهمة مرة واحدة.',
+ 'Manual minutes / task':'دقائق العمل اليدوي لكل مهمة','Average current end-to-end staff effort.':'متوسط وقت الموظف لإتمام المهمة حاليًا.',
+ 'Assisted minutes / task':'دقائق العمل بمساعدة الوكيل لكل مهمة','Include human review, exceptions and corrections.':'يشمل المراجعة البشرية والحالات الاستثنائية والتصحيحات.',
+ 'Tasks using the agent (%)':'المهام التي تستخدم الوكيل (%)','Remaining tasks keep the manual workflow.':'تبقى المهام الأخرى ضمن العمل اليدوي.',
+ 'Staff cost / hour':'تكلفة الموظف في الساعة','Fully loaded hourly cost in the selected currency.':'التكلفة الكاملة للساعة بالعملة المحددة.',
+ 'Saved capacity converted to cash (%)':'الوقت الموفر الذي يتحول إلى وفر نقدي (%)','Use 0 unless payroll, overtime or contractor spending falls.':'استخدم صفرًا ما لم تنخفض تكاليف الرواتب أو العمل الإضافي أو المتعاقدين.',
+ 'Recurring cost / month':'التكلفة المتكررة شهريًا','Include models, hosting, support and subscription.':'تشمل النماذج والاستضافة والدعم والاشتراك.',
+ 'One-time setup cost':'تكلفة الإعداد لمرة واحدة','Include integration, onboarding and training.':'تشمل التكامل والتهيئة والتدريب.',
+ 'Inputs stay in this page until you reload. They are not sent to the server.':'تبقى المدخلات في هذه الصفحة حتى إعادة تحميلها. لا تُرسل إلى الخادم.',
+ 'Restore illustrative example':'استعادة المثال التوضيحي','Projected impact':'الأثر التقديري','Constant workload and adoption; a full twelve months of use.':'حجم عمل ونسبة استخدام ثابتان؛ اثنا عشر شهرًا كاملة من الاستخدام.',
+ 'Hours freed / month':'الساعات المتاحة شهريًا','Includes review and corrections':'يشمل المراجعة والتصحيحات','Capacity value / month':'قيمة الوقت المتاح شهريًا','Value of time; not extra cash':'قيمة الوقت؛ ليست نقدًا إضافيًا',
+ 'Net cash effect / month':'صافي الأثر النقدي شهريًا','Cash benefit minus recurring cost':'المنفعة النقدية ناقص التكلفة المتكررة','First-year net cash effect':'صافي الأثر النقدي للسنة الأولى','Twelve months, less setup cost':'اثنا عشر شهرًا بعد خصم تكلفة الإعداد',
+ 'Manual workload / month':'ساعات العمل اليدوي شهريًا','Assisted workload / month':'ساعات العمل بمساعدة الوكيل شهريًا','hours':'ساعة','months':'شهرًا','Cash benefit / month':'المنفعة النقدية شهريًا','First-year cash ROI':'العائد النقدي على التكلفة في السنة الأولى','Not applicable: no costs':'لا ينطبق: لا توجد تكاليف','Setup payback':'استرداد تكلفة الإعداد','No payback under these assumptions':'لا يتحقق الاسترداد بهذه الافتراضات','No setup cost':'لا توجد تكلفة إعداد',
+ 'What if adoption changes?':'ماذا لو تغيرت نسبة الاستخدام؟','All other assumptions stay the same. These scenarios are not forecasts or confidence intervals.':'تبقى الافتراضات الأخرى ثابتة. هذه السيناريوهات ليست تنبؤات أو فترات ثقة.',
+ 'Monthly impact by share of tasks using the agent':'الأثر الشهري بحسب نسبة المهام التي تستخدم الوكيل','Adoption':'نسبة الاستخدام','Hours freed':'الساعات المتاحة','Capacity value':'قيمة الوقت المتاح','Net cash effect':'صافي الأثر النقدي',
+ 'Download scenario':'تنزيل السيناريو','Print scenario':'طباعة السيناريو','How the calculation works':'طريقة الحساب',
+ 'Hours freed = tasks × adoption × (manual minutes − assisted minutes) ÷ 60.':'الساعات المتاحة = المهام × نسبة الاستخدام × (الدقائق اليدوية − الدقائق بمساعدة الوكيل) ÷ ٦٠.',
+ 'Capacity value = hours freed × hourly staff cost.':'قيمة الوقت المتاح = الساعات المتاحة × تكلفة ساعة الموظف.',
+ 'Cash benefit = positive capacity value × cash realization; added labor is charged in full.':'المنفعة النقدية = قيمة الوقت الموفّر الموجبة × نسبة التحول إلى وفر نقدي؛ تُحتسب تكلفة العمل الإضافي كاملة.',
+ 'Net monthly cash = cash benefit − recurring cost. First-year net cash = 12 × net monthly cash − setup cost.':'صافي النقد الشهري = المنفعة النقدية − التكلفة المتكررة. صافي السنة الأولى = ١٢ × صافي النقد الشهري − تكلفة الإعداد.',
+ 'Cash ROI = (12 × cash benefit − first-year costs) ÷ first-year costs. Payback = setup cost ÷ positive net monthly cash.':'العائد النقدي = (١٢ × المنفعة النقدية − تكاليف السنة الأولى) ÷ تكاليف السنة الأولى. الاسترداد = تكلفة الإعداد ÷ صافي النقد الشهري الموجب.',
+ 'Capacity value and cash benefit overlap; do not add them. Collections, revenue uplift, financing benefits and tax effects are excluded. Test the time and adoption assumptions in a pilot.':'تتداخل قيمة الوقت والمنفعة النقدية؛ لا تجمعهما. لا تشمل الحاسبة زيادة التحصيل أو الإيرادات أو فوائد التمويل أو الضرائب. اختبر افتراضات الوقت والاستخدام في تجربة عملية.',
+ 'Scenario uses your entered assumptions.':'يستخدم السيناريو الافتراضات التي أدخلتها.','Illustrative example assumptions.':'افتراضات مثال توضيحي.',
+ 'Enter a valid number in every field. Percentages must be between 0 and 100; costs and times cannot be negative.':'أدخل رقمًا صالحًا في كل حقل. النسب بين صفر و١٠٠؛ لا تقبل التكاليف والأوقات قيمًا سالبة.',
+ 'These assumptions increase staff workload. Added labor cost is included in the cash effect.':'تزيد هذه الافتراضات وقت عمل الموظفين. تُحتسب تكلفة العمل الإضافي ضمن الأثر النقدي.'
+});

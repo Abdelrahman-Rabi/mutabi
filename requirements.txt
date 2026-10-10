@@ -1,1 +1,3 @@
+# Optional: needed for ChatGPT sign-in and the complete OAuth test suite.
+# The default reviewer demo and offline workflow check use only the standard library.
 PyJWT[crypto]>=2.10,<3

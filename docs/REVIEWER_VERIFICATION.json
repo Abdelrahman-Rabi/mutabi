@@ -1,0 +1,87 @@
+{
+  "date": "2026-10-10",
+  "python": "3.12.14",
+  "platform": "win32",
+  "archive_extracted_fresh": true,
+  "package_has_no_local_env_or_venv": true,
+  "third_party_site_packages_disabled": true,
+  "unzip_seconds": 0.215,
+  "first_http_page_seconds": 0.886,
+  "reviewer_check": {
+    "status": "passed",
+    "checks": [
+      {
+        "check": "Promise creates a dated check",
+        "passed": true,
+        "evidence": "INV-001: SAR 3,000 promised on 5 October; balance check due 6 October."
+      },
+      {
+        "check": "Delivery needs employee approval",
+        "passed": true,
+        "evidence": "Unapproved draft was blocked."
+      },
+      {
+        "check": "Approved simulated delivery is retry-safe",
+        "passed": true,
+        "evidence": "One simulated delivery; retry creates no second delivery; balance stays SAR 3,000."
+      },
+      {
+        "check": "Fresh accounting evidence drives the missed follow-up",
+        "passed": true,
+        "evidence": "TC-15 confirms SAR 3,000 outstanding; missed promise produces an approval-required draft."
+      },
+      {
+        "check": "Completed check does not run twice",
+        "passed": true,
+        "evidence": "No additional due action on retry."
+      },
+      {
+        "check": "Free text needs review in demo mode",
+        "passed": true,
+        "evidence": "An uncurated reply was sent to employee review rather than guessed."
+      },
+      {
+        "check": "Installment fulfillment keeps remaining debt visible",
+        "passed": true,
+        "evidence": "SAR 1,000 installment fulfilled; invoice still has SAR 2,000 outstanding."
+      }
+    ],
+    "elapsed_seconds": 0.816,
+    "provider": "curated demo examples",
+    "accounting": "simulated",
+    "delivery": "simulated",
+    "live_model_calls": 0,
+    "persistent_workspace_modified": false
+  },
+  "frontend_assets_served": [
+    "app.js",
+    "impact.js",
+    "i18n.js",
+    "style.css"
+  ],
+  "seeded_invoices": 14,
+  "default_provider": "demo",
+  "readme_relative_links": "passed",
+  "occupied_port_guidance": "passed",
+  "full_suite": {
+    "tests": 121,
+    "seconds": 29.576,
+    "status": "passed"
+  },
+  "browser_walkthrough": {
+    "status": "passed",
+    "readmeWalkthrough": {
+      "freshDemo": true,
+      "promise": true,
+      "ownedCheck": true,
+      "delivery": true,
+      "missed": true,
+      "zeroCash": true,
+      "fortyCash": true
+    },
+    "browser": "Chromium",
+    "elapsed_seconds": 2.438,
+    "pageErrors": [],
+    "source": "Freshly extracted source ZIP, Python -S, no local .env"
+  }
+}

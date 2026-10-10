@@ -1,0 +1,23 @@
+Use case: infographic-diagram.
+Asset type: landscape workflow infographic for a Mutabi hackathon pitch deck. Generate one polished, flat vector-style infographic at 1920x1080 or another crisp exact 16:9 ratio. Fully opaque background #F7F8F3, dark forest green #163D33 text and connectors, soft lime #CFDBAD for HUMAN steps, muted sage #5F6E66 secondary text. Arial-like sans-serif, large clear typography. Keep all required words correctly spelled. No gradients, 3D, photography, decorative robots, numerical impact claims or fake interface screenshots.
+
+Primary request: Explain Mutabi's payment-promise workflow accurately with a simple five-stage left-to-right upper row and four outcome cards in the lower row. This is a business process infographic, not technical architecture.
+
+Composition: No overall title, logo or page footer; those will be native text in Google Slides outside this image. Use modest 40px margins. Make the top row five evenly sized rounded cards, connected left-to-right by arrowheads. Each card has a small crisp illustrative line icon above its heading, then a short supporting line. Customer speech bubble; AI structured fields; human checklist approval; commitment card with person and calendar; accounting ledger with check mark. Stage 3 visibly lime to indicate required HUMAN review. Only stage 3 confirms extracted fields. Stage 2 does not change balances.
+Exact top row text, one stage per card:
+1. Heading "Customer reply"; supporting text "Payment promise"
+2. Heading "AI interpretation"; supporting text "Invoice · Amount · Date"
+3. Heading "Employee review"; supporting text "Confirm the details"
+4. Heading "Track commitment"; supporting text "Promise · Owner · Next check"
+5. Heading "Verify payment"; supporting text "Accounting evidence"
+
+From the FIFTH CARD ONLY, draw a single clean branching connector downward into a horizontal rail, with four DOWNWARD ARROWHEADS entering four evenly sized outcome cards. All outcomes are ALTERNATIVE branches, never a sequence. No arrows between the lower outcome cards. Outcome icons: settled invoice check; installment ledger; unpaid calendar plus message draft; magnifying glass finance review.
+Exact lower row text:
+- Heading "Paid in full"; supporting text "Close settled case"
+- Heading "Partial payment"; supporting text "Track remaining debt"
+- Heading "Missed promise"; supporting text "Draft follow-up"
+- Heading "Unverified claim"; supporting text "Finance review"; small supporting line "Pause reminders"
+
+Only the "Missed promise" card has a downward arrow to a separate small lime pill, with exact text "Employee approves contact". This human approval is required before customer contact. No branch arrow from unverified claim into follow-up. Keep every lower label at a comparable large font size, legible on a slide.
+
+Constraints: Balanced white space, crisp lines, 5 stages exactly, 4 outcome cards exactly. Text is verbatim. No extra words, outcome percentages, channel logos, automatic scheduling claims, autonomous sending claims or business results. Fit every icon, label and arrow inside the canvas; do not crop. Human review and contact approval must both be obvious.

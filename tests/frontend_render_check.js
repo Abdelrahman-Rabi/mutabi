@@ -12,12 +12,12 @@ const context = vm.createContext({
   fetch: () => new Promise(() => {}),
 });
 const staticPath = path.join(__dirname, '..', 'mutabi', 'static');
-for (const file of ['i18n.js', 'app.js']) {
+for (const file of ['i18n.js', 'impact.js', 'app.js']) {
   vm.runInContext(fs.readFileSync(path.join(staticPath, file), 'utf8'), context, { filename: file });
 }
 vm.runInContext('state = JSON.parse(JSON.stringify(payload))', context);
 const views = ['overviewView', 'collectionsView', 'promisesView', 'tasksView',
-  'approvalsView', 'analyticsView', 'feedbackView', 'settingsView', 'studioView'];
+  'approvalsView', 'analyticsView', 'impactView', 'feedbackView', 'settingsView', 'studioView'];
 for (const locale of ['ar', 'en']) {
   vm.runInContext(`language = '${locale}'`, context);
   for (const view of views) {
@@ -37,4 +37,4 @@ for (const locale of ['ar', 'en']) {
   assert.equal(vm.runInContext('storySteps(storyFixture)[0]', context), 'English fallback');
   vm.runInContext('state = JSON.parse(JSON.stringify(payload))', context);
 }
-console.log('All nine views render in English and Arabic; optional story steps are safe.');
+console.log('All ten views render in English and Arabic; optional story steps are safe.');

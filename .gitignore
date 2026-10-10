@@ -6,3 +6,5 @@ __pycache__/
 .env
 .env.*
 !.env.example
+# Generated submission archives and video exports are local handoff artifacts.
+/deliverables/

@@ -85,6 +85,14 @@ class WebTests(unittest.TestCase):
         finally:
             server.shutdown();server.server_close();thread.join()
 
+    def test_second_listener_cannot_take_an_occupied_demo_port(self):
+        server = make_server(self.app, 0)
+        try:
+            with self.assertRaises(OSError):
+                make_server(self.app, server.server_port)
+        finally:
+            server.server_close()
+
 
 if __name__ == '__main__':
     unittest.main()

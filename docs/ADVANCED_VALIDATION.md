@@ -1,5 +1,26 @@
 # Advanced discovery release — validation evidence
 
+## Reviewer source package — 10 October 2026
+
+- Added a credential-free `run_demo.py` launcher and a disposable end-to-end `--check` command. The README leads with one-command startup and an explicit reviewer walkthrough.
+- Clean source ZIP starts without site packages or a local `.env`: first HTTP page in 0.886 seconds; all seven workflow checks passed in 0.816 seconds on Windows/Python 3.12.14. These are software verification timings, not SME impact data.
+- Browser verification from the extracted source passed the README journey and calculator scenarios without page errors.
+- Fixed Windows listener sharing so an occupied port produces clear startup guidance. Full offline suite: **121 tests passed** in **29.576 seconds**, including the new listener regression.
+- Source packaging excludes credentials, generated state, installed dependencies and video outputs. See [reviewer readiness](REVIEWER_READINESS.md).
+
+## Impact calculator — 10 October 2026
+
+Added a bilingual assumption-based calculator with adoption sensitivity, explicit capacity/cash separation, recurring/setup costs, first-year cash ROI and payback. It uses no provider calls and submits no calculator inputs to the server.
+
+- Full automated suite: **120 tests passed** (34.052 seconds). New arithmetic checks cover hand-calculated examples, zero workload/adoption, slower assisted work, invalid inputs, zero-cost ROI and payback. The frontend contract renders all ten views in English and Arabic.
+- JavaScript syntax and Git whitespace checks passed.
+- Local browser preview on port 8878: illustrative inputs yielded 50 hours freed and SAR 2,500 capacity value. Changing cash realization to 40% yielded SAR 500 monthly net cash, SAR 4,000 first-year net cash, 50% first-year cash ROI and four-month setup payback.
+- Adoption of 101% displayed an error and removed projected results. Restoring 60% recovered results. Arabic switching preserved inputs and localized the calculator.
+- Scenario JSON downloaded successfully with inputs, results, formulas and adoption scenarios. Print is provided through the browser's print dialog; a PDF export was not separately tested.
+- [Saved calculator view](screenshots/impact-calculator-en.png) shows an illustrative edited scenario, not customer results.
+
+See [formula definitions and limitations](IMPACT_CALCULATOR.md). All outputs are projections under entered assumptions; they are not measured product impact.
+
 Verified locally on 4 October 2026. This records implementation checks, not customer validation or measured business impact.
 
 ## Automated checks

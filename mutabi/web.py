@@ -6,6 +6,7 @@ import json
 import os
 import re
 import secrets
+import socket
 import sqlite3
 import threading
 import time
@@ -27,6 +28,16 @@ from .product import DemoInterpreter, initialize_product, product_snapshot, prod
 from .imports import import_csv
 
 STATIC = ROOT / 'mutabi' / 'static'
+
+
+class LocalDemoServer(ThreadingHTTPServer):
+    def server_bind(self):
+        # Windows SO_REUSEADDR can let a second listener take an occupied demo
+        # port. Use an exclusive listener so startup reports the conflict.
+        if hasattr(socket, 'SO_EXCLUSIVEADDRUSE'):
+            self.allow_reuse_address = False
+            self.socket.setsockopt(socket.SOL_SOCKET, socket.SO_EXCLUSIVEADDRUSE, 1)
+        super().server_bind()
 
 
 class DemoApp:
@@ -264,11 +275,11 @@ def make_server(app, port=8765):
                         '<link rel="stylesheet" href="/style.css"><main><h1>ChatGPT connection</h1><p>' + escape(message) +
                         '</p><p dir="rtl">ارجع إلى متابع للاطلاع على حالة الاتصال.</p><a href="/">Return to Mutabi / العودة إلى متابع</a></main></html>')
                 self.respond(200, page.encode(), 'text/html; charset=utf-8')
-            elif path in ('/','/app.js','/i18n.js','/style.css'):
+            elif path in ('/','/app.js','/i18n.js','/impact.js','/style.css'):
                 if path == '/':
                     self.workspace()
-                filename = {'/':'index.html','/app.js':'app.js','/i18n.js':'i18n.js','/style.css':'style.css'}[path]
-                mime = {'/':'text/html','/app.js':'text/javascript','/i18n.js':'text/javascript','/style.css':'text/css'}[path]
+                filename = {'/':'index.html','/app.js':'app.js','/i18n.js':'i18n.js','/impact.js':'impact.js','/style.css':'style.css'}[path]
+                mime = {'/':'text/html','/app.js':'text/javascript','/i18n.js':'text/javascript','/impact.js':'text/javascript','/style.css':'text/css'}[path]
                 self.respond(200,(STATIC / filename).read_bytes(),mime + '; charset=utf-8')
             else:
                 self.respond(404, {'error':'Not found'})
@@ -341,7 +352,7 @@ def make_server(app, port=8765):
             except Exception:
                 self.respond(500, {'error':'The action could not be completed. Refresh and review the saved history before retrying.'})
 
-    return ThreadingHTTPServer(('127.0.0.1',port), Handler)
+    return LocalDemoServer(('127.0.0.1',port), Handler)
 
 
 def main():
