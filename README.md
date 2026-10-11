@@ -4,6 +4,16 @@ Mutabi helps a distributor turn customer replies into recorded payment commitmen
 
 **Reviewers: start with the credential-free demo below.** The source includes a working bilingual web interface, SQLite persistence, workflow/tool code, synthetic fixtures, and automated tests. The default interpretation provider recognizes exact curated examples; arbitrary replies require manual review. Optional live Gemini and ChatGPT providers are separate from the offline demonstration.
 
+## Demo video
+
+**[Watch / download the English demo — 2:49](https://github.com/Abdelrahman-Rabi/mutabi/releases/download/demo-video-v1/mutabi-demo-en-draft.mp4)**
+
+[![Watch the Mutabi demo video: capture a promise, verify accounting evidence, and take reviewed action](docs/video/poster.png)](https://github.com/Abdelrahman-Rabi/mutabi/releases/download/demo-video-v1/mutabi-demo-en-draft.mp4)
+
+Click the preview to open the MP4. The video includes English narration and captions, a complete payment-promise journey, and the SMB impact calculator. It uses synthetic data and simulated delivery; impact figures are assumption-based scenarios, not measured results.
+
+[Video and subtitles](https://github.com/Abdelrahman-Rabi/mutabi/releases/tag/demo-video-v1) · [Narration script](docs/VIDEO_SCRIPT_EN.md)
+
 ## Run in under five minutes
 
 Prerequisites: **Python 3.10+** and a current browser. Installing Python, if it is not already present, is outside this startup target. The default demo needs **no API key, sign-in, pip install, Node.js, Docker, or frontend build**.
